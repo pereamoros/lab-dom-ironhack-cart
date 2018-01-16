@@ -1,17 +1,8 @@
 'use strict';
 
-
 function deleteItem(event){
   event.currentTarget.parentNode.remove();
   getTotalPrice();
-}
-
-function getPriceByProduct(itemNode){
-
-}
-
-function updatePriceByProduct(productPrice, index){
-
 }
 
 function getTotalPrice() {
@@ -29,85 +20,89 @@ function getTotalPrice() {
     productTotal.innerText = totalProductPrice;
     
   }
-  
-  totalPriceContainer.innerText = totalPrice;
 
-  // var productPrice = document.getElementsByClassName('product-cost');
-  // var productQty = document.getElementsByClassName('product-quantity');
-  // var productTotal = document.getElementsByClassName('product-total');
-  // var totalPriceContainer = document.getElementById('total-price');
-  // var totalPrice = 0;
-
-  // for(var i = 0; i < productPrice.length; i++){
-
-  //   var totalProductPrice = Math.round((Number(productPrice[i].textContent) * Number(productQty[i].value))*100)/100;
-  //   totalPrice += totalProductPrice;    
-  //   productTotal[i].innerHTML = totalProductPrice;
-    
-  // }
-  
-  // totalPriceContainer.innerHTML = totalPrice;
-}
-
-function createQuantityInput(){
+  totalPriceContainer.innerHTML = totalPrice;
 
 }
 
-function createDeleteButton(){
-  var newDeleteButton = document.createElement('div');
-  newDeleteButton.classList.add('btn', 'btn-delete');
-  var buttonSpan = document.createElement('span');
-  buttonSpan.innerText = "Delete";
-  newDeleteButton.appendChild(buttonSpan);
-  
-}
-
-function createQuantityNode(){
-  var newQtyNode = document.createElement('div');
-  newDeleteButton.classList.add('product-qty');
-  var newLabel = document.createElement('label');
-  newLabel.classList.add('quantity');
-  newLabel.innerText = "QTY";
-  var newInput = document.createElement('input');
-  newInput.classList.add('product-quantity');
-  newInput.setAttribute('value','0');
-  newQtyNode.appendChild(newLabel);
-  newQtyNode.appendChild(newInput);
-
-}
-
-function createItemNode(dataType, itemData){
-
-}
-
-function createNewItemRow(itemName, itemUnitPrice){
-
-}
-
-function createNewItem(){
-  // Product Name
-  var productList = document.getElementById('product-list');
-  var newProduct = document.createElement('div');
-  newProduct.setAttribute('class', 'product-item');
+function createItemName(product){
   var newProductName = document.createElement('div');
   var productNameSpan = document.createElement('span');
   var productNameInput = document.getElementById('create-name').value;
   newProductName.setAttribute('class', 'product-name');
   productNameSpan.innerText = productNameInput;
   newProductName.appendChild(productNameSpan);
+  product.appendChild(newProductName);
+}
 
-  newProduct.appendChild(newProductName);
+function createPriceTag(product){
+  var newPriceTag = document.createElement('div');
+  newPriceTag.setAttribute('class', 'product-cost');
+  var productPriceSpan = document.createElement('span');
+  var productPriceInput = document.getElementById('create-price').value;
+  productPriceSpan.innerText = productPriceInput;
+  newPriceTag.appendChild(productPriceSpan);
 
-  // createDeleteButton();
+  product.appendChild(newPriceTag);
+}
+
+function createQuantityInput(product){
+  var newQtyInput = document.createElement('div');
+  newQtyInput.classList.add('product-qty');
+  var newLabel = document.createElement('label');
+  newLabel.classList.add('quantity');
+  newLabel.innerText = "QTY";
+  var newInput = document.createElement('input');
+  newInput.classList.add('product-quantity');
+  newInput.setAttribute('value', 0);
+  newInput.setAttribute('type', 'number');
+  newQtyInput.appendChild(newLabel);
+  newQtyInput.appendChild(newInput);
+  product.appendChild(newQtyInput);
+}
+
+function createQuantityNode(product){
+  var newQtyNode = document.createElement('div');
+  var qtySpan = document.createElement('span');
+  qtySpan.classList.add('product-total');
+  qtySpan.innerText = "0";
+  newQtyNode.appendChild(qtySpan);
+  product.appendChild(newQtyNode);
+}
+
+function createDeleteButton(product){
   var newDeleteButton = document.createElement('div');
   newDeleteButton.classList.add('btn', 'btn-delete');
   var buttonSpan = document.createElement('span');
   buttonSpan.innerText = "Delete";
   newDeleteButton.appendChild(buttonSpan);
-  newProduct.appendChild(newDeleteButton);
+  product.appendChild(newDeleteButton);
+}
+// function getPriceByProduct(itemNode){}
 
+// function updatePriceByProduct(productPrice, index){}
 
+// function createItemNode(dataType, itemData){}
+
+// function createNewItemRow(itemName, itemUnitPrice){}
+
+function createNewItem(){
+  var productList = document.getElementById('product-list');
+  var newProduct = document.createElement('div');
+  newProduct.setAttribute('class', 'product-item');
+  
+  createItemName(newProduct);
+  createPriceTag(newProduct);
+  createQuantityInput(newProduct);
+  createQuantityNode(newProduct)
+  createDeleteButton(newProduct);
   productList.appendChild(newProduct);
+
+  var deleteButtons = document.getElementsByClassName('btn-delete');
+
+  for(var i = 0; i < deleteButtons.length ; i++){
+    deleteButtons[i].onclick = deleteItem;
+  }
 }
 
 window.onload = function(){
